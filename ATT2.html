@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VueJS To-Do List</title>
+  <!-- Link para o arquivo CSS -->
+  <link rel="stylesheet" href="C:\Users\lucas alberto\Downloads\CSS\ATT2\CSS.att2.css">
+  <!-- Incluindo o VueJS -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+
+<div id="app">
+  <h1>VueJS To-Do List</h1>
+  
+  <!-- Input e botão para adicionar nova tarefa -->
+  <input type="text" v-model="newTask" placeholder="Adicionar nova tarefa">
+  <button @click="addTask">Adicionar</button>
+
+  <!-- Lista de tarefas -->
+  <ul>
+    <!-- Utilizamos a diretiva `v-bind:class` para adicionar uma classe condicional -->
+    <li v-for="(task, index) in tasks" :key="index" :class="{ 'completed': task.completed }">
+      <!-- Mostra o nome da tarefa -->
+      {{ task.name }}
+      <!-- Botão para marcar como concluída -->
+      <button @click="completeTask(index)">Concluir</button>
+      <!-- Botão para remover a tarefa -->
+      <button @click="removeTask(index)">Remover</button>
+    </li>
+  </ul>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    newTask: '', // Armazena a nova tarefa digitada
+    tasks: [] // Armazena todas as tarefas
+  },
+  methods: {
+    // Função para adicionar nova tarefa à lista
+    addTask() {
+      // Verifica se o campo de nova tarefa não está vazio
+      if (this.newTask.trim() !== '') {
+        // Adiciona a nova tarefa à lista
+        this.tasks.push({
+          name: this.newTask,
+          completed: false // Define que a tarefa começa como não concluída
+        });
+        // Limpa o campo de nova tarefa
+        this.newTask = '';
+      }
+    },
+    // Função para marcar a tarefa como concluída
+    completeTask(index) {
+      // Altera o estado da tarefa entre concluída e não concluída
+      this.tasks[index].completed = !this.tasks[index].completed;
+    },
+    // Função para remover a tarefa da lista
+    removeTask(index) {
+      // Remove a tarefa da lista com base no índice
+      this.tasks.splice(index, 1);
+    }
+  }
+});
+</script>
+
+</body>
+</html>
